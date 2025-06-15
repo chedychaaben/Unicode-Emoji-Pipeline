@@ -1,20 +1,23 @@
 import pandas as pd 
-import requests, base64, svgwrite, os
+import requests, base64, os
 
 
 df = pd.read_csv('full-emoji-list-and-skincolors-ranked-2019-2021&UID&GOODCLDR.csv')
 
 
 
-def download_image(cldr, source, data):
+def download_image(cldr, source, data): 
     if str(data) != 'nan':
         base64_data = data
         decoded_data = base64.b64decode(base64_data.split(',')[1])
-        filename = os.path.join("assets/png/", f"{cldr}_{source}.png")
+        
+        folder_path = f"Results/{source}/"
+        os.makedirs(folder_path, exist_ok=True)
+        
+        filename = os.path.join(folder_path, f"{cldr}_{source}.png")
         with open(filename, "wb") as f:
             f.write(decoded_data)
             print(f"Image saved to {filename}")
-        return None
 
 
 
